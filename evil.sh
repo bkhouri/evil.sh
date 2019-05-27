@@ -43,7 +43,7 @@ function unusable()
 destructive && export EDITOR=/bin/rm;
 
 # Make Tab send the delete key.
-insane && tset -Qe $'\t';
+#insane && tset -Qe $'\t';
 
 # Randomly set more is less, and less is more
 if insane ; then
